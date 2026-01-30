@@ -1,0 +1,11 @@
+numpy 
+pandas 
+matplotlib 
+seaborn 
+shap 
+xgboost 
+lightgbm 
+catboost 
+scikit-learn 
+tensorflow 
+pyqt5
