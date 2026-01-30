@@ -7,30 +7,30 @@ Six ML algorithms were used to predict the mechanical properties of fiber-type U
 
 基于机器学习的混凝土抗压/抗折强度预测工具，集成 CatBoost、XGBoost、LightGBM 等多种算法，提供 SHAP 可解释性分析和 PyQt5 交互界面。
 
-# 📋 目录
+# 📋 Contents
 
-- [环境准备](#环境准备)
-- [安装依赖](#安装依赖)
-- [运行方式](#运行方式)
-- [功能说明](#功能说明)
-- [模拟结果](#模拟结果)
-- [Citation](#Citation)
+- [Environment Setup](#environment-setup)
+- [Dependencies Installation](#dependencies-installation)
+- [How to Run](#how-to-run)
+- [Functionality Description](#functionality-description)
+- [Simulation Results](#simulation-results)
+- [Citation](#citation)
 
-##  🔧 环境准备
+##  Environment Setup
 
-### 1. 虚拟机配置
-- 下载并配置 VMware 虚拟环境
+### 1. VM Configuration
+- Download and Configure VMware Virtual Environment.
 
-### 2. Python 环境
-- 安装 Python **3.10.12**
-- 建议创建虚拟环境：
+### 2. Python Environment
+- Python **3.10.12** Installation
+- Recommend Creating a Virtual Environment：
   ```
   python3.10 -m venv venv
   source venv/bin/activate  # Linux/Mac
-  # 或 venv\Scripts\activate  # Windows
+  # or venv\Scripts\activate  # Windows
   ```
   
-##  📦 安装依赖
+##  Dependencies Installation
 ```bash
 git clone https://github.com/Yves1415/UHPC-replication.git
 cd UHPC-replication
@@ -38,29 +38,36 @@ pip3 install -r requirements.txt
 # pip install numpy pandas matplotlib seaborn shap xgboost lightgbm catboost scikit-learn tensorflow pyqt5
 ```
 
- ### 验证安装
+ ### Install Verification
 ```
-python -c "import shap; import catboost; import PyQt5; print('所有依赖安装成功')"
+python -c "import shap; import catboost; import PyQt5; print('All Dependencies Installed Successfully')"
 ```
 
- ##  🚀 运行
+ ## How to Run
 ```
 python main2.py
 ```
 
- ##  📊 功能说明
-
-| 模块	| 功能描述 |
+ ## Functionality Description
+| Module| Function Description |
 |:---------:|:---------:|
-|数据生成	| 模拟 863 组抗压 + 321 组抗折数据（基于论文 Table 1-2 统计特征）|
-|模型训练	| 支持 CatBoost、XGBoost、LightGBM、GBM、ExtraTree、DNN |
-|科研绘图	| SHAP 分析、雷达图、热力图、误差分析 |
-|GUI 界面	| 交互式强度预测软件（基于 PyQt5）|
+|Data Generation	| Simulate 863 sets of compressive strength and 321 sets of flexural strength data|
+|Model Training	| Support CatBoost, XGBoost, LightGBM, GBM, ExtraTree and DNN |
+|Scientific Plotting	| SHAP analysis, radar chart, heat map and error analysis|
+|GUI Interface| Interactive strength prediction software based on PyQt5 |
 
 
-# 模拟结果
+# Simulation Results
 
-> 在这里添加图片的说明，并且说明使用什么数据训练的结果
+> The simulated dataset was generated using the Monte Carlo simulation method based on the statistical distribution characteristics of the original data for model training.Based on the mean, standard deviation, and extreme values reported in Tables 1 and 2 of the original paper, a truncated normal distribution was employed to generate 863 samples for compressive strength and 321 samples for flexural strength.The input feature space comprises 17 mixture proportion parameters. The target variables—compressive strength and flexural strength—were generated using a semi‑empirical model that incorporates key influencing factors such as age and fiber volume fraction. Gaussian noise was added to simulate experimental measurement errors.The dataset was randomly divided into a training set (80%) and a test set (20%), with a random seed of 42 to ensure reproducibility. Additionally, Z‑score normalization was applied to all continuous features.
+
+>The simulation results are explained below based on the figures.
+Figure 1: Demonstrates the performance of different models in predicting UHPC. Based on the R-square  values or directly from the figure, CatBoost achieves the optimal performance, while DNN performs the worst.
+Figure 2: SHAP feature importance ranking. Factors such as Age, SSV and SF are key positive influencing factors, whereas W is a key negative influencing factor.
+Figure 3: SSV shows the most significant performance in both analyses, which is consistent with the basic mechanical principles of UHPC materials.
+Figure 4: Demonstrates the distribution of compressive strength and flexural strength of UHPC, which is actually used to display the strength distribution in the dataset.
+Figure 5: Feature Correlation Heatmap: SF, Age and SSV are key positive influencing factors.
+Figure 6: Displays the error distribution of the CatBoost model in predicting compressive strength. Most errors are concentrated between -10 MPa and +10 MPa, indicating that our model has relatively high prediction accuracy.
 
 ![](asserts/figure1.png)
 
@@ -74,12 +81,17 @@ python main2.py
 
 ![](asserts/figure6.png)
 
-> 在这里添加不同模型在数据集下的表现，例如：
-> 需要你补齐数据
+> Model Performance on the Dataset.
+Taking Compressive Strength as an Example:
 
-|模型         |R-Square           |RMSE   |
+|Model        |R-Square           |RMSE   |
 |-------------|-------------------|-------|
-|XGBoost      |0.912              |0.102  |
+|XGBoost      |0.803              |0.102  |
+|CatBoost     |   0.943           |  2.25 | 
+|LightGBM     |    0.921          |  3.85 |  
+|GBM          |   0.933           |  3.87 |    
+|ExtraTree    |    0.908          |  8.39 |     
+|DNN          |   0.739           |  5.88 |    
 
 # Citation
 
